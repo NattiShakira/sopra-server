@@ -2,6 +2,8 @@ package ch.uzh.ifi.hase.soprafs23.rest.dto;
 
 import ch.uzh.ifi.hase.soprafs23.constant.UserStatus;
 
+import javax.persistence.Column;
+
 public class UserGetDTO {
 
   private Long id;
@@ -40,4 +42,24 @@ public class UserGetDTO {
   public void setStatus(UserStatus status) {
     this.status = status;
   }
+
+    private String creation_date;
+
+    private String birthday;
+
+    public String getCreation_date() {
+        return creation_date;
+    }
+
+    public void setCreation_date(String creation_date) {
+        this.creation_date = creation_date;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
 }

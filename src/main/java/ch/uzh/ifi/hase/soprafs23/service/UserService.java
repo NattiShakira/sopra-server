@@ -46,7 +46,7 @@ public class UserService {
     // saves the given entity but data is only persisted in the database once
     // flush() is called
     newUser = userRepository.save(newUser);
-    userRepository.flush();
+    userRepository.flush(); // To save
 
     log.debug("Created Information for User: {}", newUser);
     return newUser;
@@ -76,4 +76,15 @@ public class UserService {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, "name", "is"));
     }
   }
+
+//    public void checkIfUserRegistered(User userToCheck) {
+//        User userByUsername = userRepository.findByUsername(userToCheck.getUsername());
+//
+//        String baseErrorMessage = "User with %s was not found";
+//        if (userByUsername == null) {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+//                    String.format(baseErrorMessage, userByUsername.getUsername()));
+//        }
+//    }
+
 }

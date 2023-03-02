@@ -54,4 +54,26 @@ public class UserController {
     // convert internal representation of user back to API
     return DTOMapper.INSTANCE.convertEntityToUserGetDTO(createdUser);
   }
+
+//    @GetMapping("/registered")
+//    @ResponseStatus(HttpStatus.OK)
+//    @ResponseBody
+//    public UserGetDTO getUser(@RequestBody UserPostDTO userPostDTO) {
+//        // fetch all users in the internal representation
+//
+//        User userInput = DTOMapper.INSTANCE.convertUserPostDTOtoEntity(userPostDTO);
+//        userService.checkIfUserRegistered(userInput);
+//
+//        List<User> users = userService.getUsers();
+//        UserGetDTO usGetDTO = null;
+//
+//        // convert each user to the API representation
+//        for (User user : users) {
+//            if (user.getUsername() == userInput.getUsername()) {
+//                usGetDTO = DTOMapper.INSTANCE.convertEntityToUserGetDTO(user);
+//            }
+//        }
+//
+//        return usGetDTO;
+//    }
 }
