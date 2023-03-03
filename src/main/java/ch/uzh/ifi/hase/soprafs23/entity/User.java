@@ -16,18 +16,18 @@ import java.util.Date;
  * - unique = true -> this value must be unqiue across the database -> composes
  * the primary key
  */
-@Entity
+@Entity // this class is a JPA entity and is mapped with a database table.
 @Table(name = "USER")
 public class User implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  @Id
+  @Id // @Id indicates that this is a primary key
   @GeneratedValue
   private Long id;
 
-  @Column(nullable = false)
-  private String name;
+//  @Column(nullable = false)
+//  private String name;
 
   @Column(nullable = false, unique = true)
   private String username;
@@ -46,13 +46,13 @@ public class User implements Serializable {
     this.id = id;
   }
 
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
+//  public String getName() {
+//    return name;
+//  }
+//
+//  public void setName(String name) {
+//    this.name = name;
+//  }
 
   public String getUsername() {
     return username;
@@ -78,25 +78,36 @@ public class User implements Serializable {
     this.status = status;
   }
 
+    @Column(nullable = false)
+    private String password;
+
   @Column(nullable = false)
-  private String creation_date;
+  private Date creation_date;
 
     @Column(nullable = true)
-    private String birthday;
+    private Date birthday;
 
-    public String getCreation_date() {
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Date getCreation_date() {
         return creation_date;
     }
 
-    public void setCreation_date(String creation_date) {
+    public void setCreation_date(Date creation_date) {
         this.creation_date = creation_date;
     }
 
-    public String getBirthday() {
+    public Date getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(String birthday) {
+    public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
 }

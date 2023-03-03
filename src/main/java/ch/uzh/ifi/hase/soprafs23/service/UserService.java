@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,9 +40,14 @@ public class UserService {
     return this.userRepository.findAll();
   }
 
+  // This method creates a new User object.
+  // First, it takes a newUser User object and then sets a token, status and creation date attributes to it.
+  // Then, is newUser passes the check (that there's no user with the same Username in the repo, an instance
+  // of newUser is saved into a repo)
   public User createUser(User newUser) {
     newUser.setToken(UUID.randomUUID().toString());
     newUser.setStatus(UserStatus.OFFLINE);
+    newUser.setCreation_date(new Date());
     checkIfUserExists(newUser);
     // saves the given entity but data is only persisted in the database once
     // flush() is called
@@ -62,29 +68,44 @@ public class UserService {
    * @throws org.springframework.web.server.ResponseStatusException
    * @see User
    */
+  // Method for Register, checks if a user with the same Username exits. If yes, deny entry, if no, create new user
   private void checkIfUserExists(User userToBeCreated) {
-    User userByUsername = userRepository.findByUsername(userToBeCreated.getUsername());
-    User userByName = userRepository.findByName(userToBeCreated.getName());
+      User userByUsername = userRepository.findByUsername(userToBeCreated.getUsername());
 
-    String baseErrorMessage = "The %s provided %s not unique. Therefore, the user could not be created!";
-    if (userByUsername != null && userByName != null) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-          String.format(baseErrorMessage, "username and the name", "are"));
-    } else if (userByUsername != null) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, "username", "is"));
-    } else if (userByName != null) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, "name", "is"));
-    }
+      String message = "The provided username is not unique. Therefore, the user could not be registered!";
+      if (userByUsername != null) {
+          throw new ResponseStatusException(HttpStatus.CONFLICT,
+                  message);
+      }
   }
 
-//    public void checkIfUserRegistered(User userToCheck) {
-//        User userByUsername = userRepository.findByUsername(userToCheck.getUsername());
-//
-//        String baseErrorMessage = "User with %s was not found";
-//        if (userByUsername == null) {
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-//                    String.format(baseErrorMessage, userByUsername.getUsername()));
-//        }
-//    }
+    public User getUser(User userToBeLoggedIn) {
+        User userByUsername = userRepository.findByUsername(userToBeLoggedIn.getUsername());
 
+        String messageNoUser = "The user with the provided username does not exist!";
+        String messageWrongPassword = "The provided password is wrong!";
+        if (userByUsername == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
+                    messageNoUser);
+        } else if (!(userByUsername.getPassword().equals(userToBeLoggedIn.getPassword()))) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
+                    messageWrongPassword);
+        }
+
+        log.debug("The user is allowed to login: {}", userByUsername);
+        return userByUsername;
+    }
+
+/*
+    @param userById
+   * @throws org.springframework.web.server.ResponseStatusException
+   * @see User
+
+ */
+    public User getUserProfile(long id) {
+        String message = "User with id %d was not found!";
+        User userById = userRepository.findById(id).
+                orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(message, id)));
+        return userById;
+    }
 }

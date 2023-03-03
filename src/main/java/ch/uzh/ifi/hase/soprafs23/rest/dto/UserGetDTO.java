@@ -3,11 +3,14 @@ package ch.uzh.ifi.hase.soprafs23.rest.dto;
 import ch.uzh.ifi.hase.soprafs23.constant.UserStatus;
 
 import javax.persistence.Column;
+import java.util.Date;
 
 public class UserGetDTO {
 
   private Long id;
-  private String name;
+  //private String name;
+
+    private String password;
   private String username;
   private UserStatus status;
 
@@ -19,13 +22,13 @@ public class UserGetDTO {
     this.id = id;
   }
 
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
+//  public String getName() {
+//    return name;
+//  }
+//
+//  public void setName(String name) {
+//    this.name = name;
+//  }
 
   public String getUsername() {
     return username;
@@ -43,23 +46,31 @@ public class UserGetDTO {
     this.status = status;
   }
 
-    private String creation_date;
+    private Date creation_date;
 
-    private String birthday;
+    private Date birthday;
 
-    public String getCreation_date() {
+    public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+    public Date getCreation_date() {
         return creation_date;
     }
 
-    public void setCreation_date(String creation_date) {
+    public void setCreation_date(Date creation_date) {
         this.creation_date = creation_date;
     }
 
-    public String getBirthday() {
+    public Date getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(String birthday) {
+    public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
 }
