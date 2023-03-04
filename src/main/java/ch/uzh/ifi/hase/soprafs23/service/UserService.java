@@ -46,7 +46,7 @@ public class UserService {
   // of newUser is saved into a repo)
   public User createUser(User newUser) {
     newUser.setToken(UUID.randomUUID().toString());
-    newUser.setStatus(UserStatus.OFFLINE);
+    newUser.setStatus(UserStatus.ONLINE);
     newUser.setCreation_date(new Date());
     checkIfUserExists(newUser);
     // saves the given entity but data is only persisted in the database once
@@ -93,6 +93,7 @@ public class UserService {
         }
 
         log.debug("The user is allowed to login: {}", userByUsername);
+        userByUsername.setStatus(UserStatus.ONLINE);
         return userByUsername;
     }
 

@@ -1,13 +1,17 @@
 package ch.uzh.ifi.hase.soprafs23.controller;
 
+import ch.uzh.ifi.hase.soprafs23.constant.UserStatus;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserGetDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserPostDTO;
+import ch.uzh.ifi.hase.soprafs23.rest.dto.UserPutDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs23.service.UserService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,13 +78,25 @@ public class UserController {
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(userById);
     }
 
+//    // GET with query
+//    @GetMapping("/users/{id}")
+//    @ResponseStatus(HttpStatus.OK)
+//    @ResponseBody // Should I change it here?
+//    public UserGetDTO retrieveUserProfileQuery(@PathVariable @RequestParam long id) {
+//        User userById = userService.getUserProfile(id);
+//        return DTOMapper.INSTANCE.convertEntityToUserGetDTO(userById);
+//    }
+
     @PutMapping("/users/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public UserGetDTO updateUser(@PathVariable long id, @RequestBody User user) {
-//      user.setUsername();
-//      user.setBirthday();
-      return DTOMapper.INSTANCE.convertEntityToUserGetDTO(user);
+    public ResponseEntity<Void> updateUser(@PathVariable long id, @RequestBody UserPutDTO userPutDTO) {
+        User userToUpdate = userService.getUserProfile(id);
+        if (userPutDTO.getUsername() != null) {
+            userToUpdate.setUsername(userPutDTO.getUsername());
+        }
+        if (userPutDTO.getBirthday() != null) {
+            userToUpdate.setBirthday(userPutDTO.getBirthday());
+        }
+      return ResponseEntity.noContent().build();
     }
-
-
 }
