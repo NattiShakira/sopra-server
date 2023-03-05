@@ -90,13 +90,8 @@ public class UserController {
     @PutMapping("/users/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> updateUser(@PathVariable long id, @RequestBody UserPutDTO userPutDTO) {
-        User userToUpdate = userService.getUserProfile(id);
-        if (userPutDTO.getUsername() != null) {
-            userToUpdate.setUsername(userPutDTO.getUsername());
-        }
-        if (userPutDTO.getBirthday() != null) {
-            userToUpdate.setBirthday(userPutDTO.getBirthday());
-        }
+        userService.updateUserProfile(userPutDTO, id);
+
       return ResponseEntity.noContent().build();
     }
 }
