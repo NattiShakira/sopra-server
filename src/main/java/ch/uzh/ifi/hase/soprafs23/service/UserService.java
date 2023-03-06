@@ -124,6 +124,9 @@ public class UserService {
             userToUpdate.setBirthday(userPutDTO.getBirthday());
         }
 
+        if (userPutDTO.getStatus() != null && !userPutDTO.getStatus().isEmpty()) {
+            userToUpdate.setStatus(UserStatus.valueOf(userPutDTO.getStatus()));
+        }
         userRepository.save(userToUpdate);
 
         return userToUpdate;

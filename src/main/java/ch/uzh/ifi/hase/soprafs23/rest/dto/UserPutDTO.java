@@ -9,7 +9,13 @@ import javax.persistence.Column;
 
 public class UserPutDTO {
 
+    private long id;
+
     private String username;
+
+    private String status;
+
+    private String birthday;
 
     public String getUsername() {
         return username;
@@ -19,7 +25,6 @@ public class UserPutDTO {
         this.username = username;
     }
 
-    private String birthday;
 
     public Date getBirthday() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
@@ -35,7 +40,6 @@ public class UserPutDTO {
         this.birthday = birthday;
     }
 
-    private long id;
 
     public long getId() {
         return id;
@@ -43,5 +47,14 @@ public class UserPutDTO {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
