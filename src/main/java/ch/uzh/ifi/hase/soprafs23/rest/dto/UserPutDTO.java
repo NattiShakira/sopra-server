@@ -1,11 +1,8 @@
 package ch.uzh.ifi.hase.soprafs23.rest.dto;
 
-import lombok.SneakyThrows;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.persistence.Column;
 
 public class UserPutDTO {
 
@@ -13,9 +10,9 @@ public class UserPutDTO {
 
     private String username;
 
-    private String status;
-
     private String birthday;
+
+    private String status;
 
     public String getUsername() {
         return username;
@@ -24,7 +21,6 @@ public class UserPutDTO {
     public void setUsername(String username) {
         this.username = username;
     }
-
 
     public Date getBirthday() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
@@ -40,7 +36,6 @@ public class UserPutDTO {
         this.birthday = birthday;
     }
 
-
     public long getId() {
         return id;
     }
@@ -49,7 +44,6 @@ public class UserPutDTO {
         this.id = id;
     }
 
-
     public String getStatus() {
         return status;
     }
@@ -57,4 +51,5 @@ public class UserPutDTO {
     public void setStatus(String status) {
         this.status = status;
     }
+
 }

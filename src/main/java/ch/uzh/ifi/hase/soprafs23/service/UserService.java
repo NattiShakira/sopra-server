@@ -65,8 +65,6 @@ public class UserService {
      * defined in the User entity. The method will do nothing if the input is unique
      * and throw an error otherwise.
      *
-     * @param userToBeCreated
-     * @throws org.springframework.web.server.ResponseStatusException
      * @see User
      */
     // Method for Register, checks if a user with the same Username exits. If yes, deny entry, if no, create new user
@@ -107,12 +105,11 @@ public class UserService {
      */
     public User getUserProfile(long id) {
         String message = "User with id %d was not found!";
-        User userById = userRepository.findById(id).
+        return userRepository.findById(id).
                 orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(message, id)));
-        return userById;
     }
 
-    public User updateUserProfile(UserPutDTO userPutDTO, long id) {
+    public void updateUserProfile(UserPutDTO userPutDTO, long id) {
         String message = "User with id %d was not found!";
         User userToUpdate = userRepository.findById(id).
                 orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(message, id)));
@@ -128,7 +125,5 @@ public class UserService {
             userToUpdate.setStatus(UserStatus.valueOf(userPutDTO.getStatus()));
         }
         userRepository.save(userToUpdate);
-
-        return userToUpdate;
     }
 }

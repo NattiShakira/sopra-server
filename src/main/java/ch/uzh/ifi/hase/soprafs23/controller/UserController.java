@@ -1,6 +1,5 @@
 package ch.uzh.ifi.hase.soprafs23.controller;
 
-import ch.uzh.ifi.hase.soprafs23.constant.UserStatus;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserGetDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserPostDTO;
@@ -11,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +20,7 @@ import java.util.List;
  * The controller will receive the request and delegate the execution to the
  * UserService and finally return the result.
  */
+
 @RestController
 public class UserController {
 
@@ -52,7 +51,6 @@ public class UserController {
   public UserGetDTO createUser(@RequestBody UserPostDTO userPostDTO) {
     // convert API user to internal representation
     User userInput = DTOMapper.INSTANCE.convertUserPostDTOtoEntity(userPostDTO);
-
     // create user
     User createdUser = userService.createUser(userInput);
     // convert internal representation of user back to API
@@ -78,15 +76,6 @@ public class UserController {
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(userById);
     }
 
-//    // GET with query
-//    @GetMapping("/users/{id}")
-//    @ResponseStatus(HttpStatus.OK)
-//    @ResponseBody // Should I change it here?
-//    public UserGetDTO retrieveUserProfileQuery(@PathVariable @RequestParam long id) {
-//        User userById = userService.getUserProfile(id);
-//        return DTOMapper.INSTANCE.convertEntityToUserGetDTO(userById);
-//    }
-
     @PutMapping("/users/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> updateUser(@PathVariable long id, @RequestBody UserPutDTO userPutDTO) {
@@ -94,4 +83,5 @@ public class UserController {
 
       return ResponseEntity.noContent().build();
     }
+    
 }

@@ -4,6 +4,7 @@ import ch.uzh.ifi.hase.soprafs23.constant.UserStatus;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -13,7 +14,7 @@ import java.util.Date;
  * Every variable will be mapped into a database field with the @Column
  * annotation
  * - nullable = false -> this cannot be left empty
- * - unique = true -> this value must be unqiue across the database -> composes
+ * - unique = true -> this value must be unique across the database -> composes
  * the primary key
  */
 @Entity // this class is a JPA entity and is mapped with a database table.
@@ -26,9 +27,6 @@ public class User implements Serializable {
   @GeneratedValue
   private Long id;
 
-//  @Column(nullable = false)
-//  private String name;
-
   @Column(nullable = false, unique = true)
   private String username;
 
@@ -38,6 +36,15 @@ public class User implements Serializable {
   @Column(nullable = false)
   private UserStatus status;
 
+    @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
+    private Date creation_date;
+
+    @Column(nullable = true)
+    private Date birthday;
+
   public Long getId() {
     return id;
   }
@@ -45,14 +52,6 @@ public class User implements Serializable {
   public void setId(Long id) {
     this.id = id;
   }
-
-//  public String getName() {
-//    return name;
-//  }
-//
-//  public void setName(String name) {
-//    this.name = name;
-//  }
 
   public String getUsername() {
     return username;
@@ -78,15 +77,6 @@ public class User implements Serializable {
     this.status = status;
   }
 
-    @Column(nullable = false)
-    private String password;
-
-  @Column(nullable = false)
-  private Date creation_date;
-
-    @Column(nullable = true)
-    private Date birthday;
-
     public String getPassword() {
         return password;
     }
@@ -109,5 +99,8 @@ public class User implements Serializable {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
+    }
+
+    public void setCreation_date(LocalDate now) {
     }
 }
