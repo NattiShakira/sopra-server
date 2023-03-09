@@ -20,20 +20,19 @@ import java.util.List;
  * The controller will receive the request and delegate the execution to the
  * UserService and finally return the result.
  */
-
 @RestController
 public class UserController {
 
-  private final UserService userService;
+    private final UserService userService;
 
-  UserController(UserService userService) {
+    UserController(UserService userService) {
     this.userService = userService;
-  }
+    }
 
-  @GetMapping("/users")
-  @ResponseStatus(HttpStatus.OK)
-  @ResponseBody
-  public List<UserGetDTO> getAllUsers() {
+    @GetMapping("/users")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<UserGetDTO> getAllUsers() {
     // fetch all users in the internal representation
     List<User> users = userService.getUsers();
     List<UserGetDTO> userGetDTOs = new ArrayList<>();
@@ -43,19 +42,19 @@ public class UserController {
       userGetDTOs.add(DTOMapper.INSTANCE.convertEntityToUserGetDTO(user));
     }
     return userGetDTOs;
-  }
+    }
 
-  @PostMapping("/users")
-  @ResponseStatus(HttpStatus.CREATED)
-  @ResponseBody
-  public UserGetDTO createUser(@RequestBody UserPostDTO userPostDTO) {
+    @PostMapping("/users")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    public UserGetDTO createUser(@RequestBody UserPostDTO userPostDTO) {
     // convert API user to internal representation
     User userInput = DTOMapper.INSTANCE.convertUserPostDTOtoEntity(userPostDTO);
     // create user
     User createdUser = userService.createUser(userInput);
     // convert internal representation of user back to API
     return DTOMapper.INSTANCE.convertEntityToUserGetDTO(createdUser);
-  }
+    }
 
     @PostMapping("/registered")
     @ResponseStatus(HttpStatus.ACCEPTED)

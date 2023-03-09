@@ -3,8 +3,8 @@ package ch.uzh.ifi.hase.soprafs23.entity;
 import ch.uzh.ifi.hase.soprafs23.constant.UserStatus;
 
 import javax.persistence.*;
+import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -21,20 +21,21 @@ import java.util.Date;
 @Table(name = "USER")
 public class User implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+    @Serial
+    private static final long serialVersionUID = 1L;
 
-  @Id // @Id indicates that this is a primary key
-  @GeneratedValue
-  private Long id;
+    @Id // @Id indicates that this is a primary key
+    @GeneratedValue
+    private Long id;
 
-  @Column(nullable = false, unique = true)
-  private String username;
+    @Column(nullable = false, unique = true)
+    private String username;
 
-  @Column(nullable = false, unique = true)
-  private String token;
+    @Column(nullable = false, unique = true)
+    private String token;
 
-  @Column(nullable = false)
-  private UserStatus status;
+    @Column(nullable = false)
+    private UserStatus status;
 
     @Column(nullable = false)
     private String password;
@@ -45,37 +46,37 @@ public class User implements Serializable {
     @Column(nullable = true)
     private Date birthday;
 
-  public Long getId() {
+    public Long getId() {
     return id;
-  }
+    }
 
-  public void setId(Long id) {
+    public void setId(Long id) {
     this.id = id;
-  }
+    }
 
-  public String getUsername() {
+    public String getUsername() {
     return username;
-  }
+    }
 
-  public void setUsername(String username) {
+    public void setUsername(String username) {
     this.username = username;
-  }
+    }
 
-  public String getToken() {
+    public String getToken() {
     return token;
-  }
+    }
 
-  public void setToken(String token) {
+    public void setToken(String token) {
     this.token = token;
-  }
+    }
 
-  public UserStatus getStatus() {
+    public UserStatus getStatus() {
     return status;
-  }
+    }
 
-  public void setStatus(UserStatus status) {
+    public void setStatus(UserStatus status) {
     this.status = status;
-  }
+    }
 
     public String getPassword() {
         return password;
@@ -101,6 +102,4 @@ public class User implements Serializable {
         this.birthday = birthday;
     }
 
-    public void setCreation_date(LocalDate now) {
-    }
 }

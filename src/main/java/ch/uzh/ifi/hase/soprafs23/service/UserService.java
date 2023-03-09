@@ -98,7 +98,7 @@ public class UserService {
     }
 
     /*
-        @param userById
+       * @param userById
        * @throws org.springframework.web.server.ResponseStatusException
        * @see User
 
@@ -110,13 +110,14 @@ public class UserService {
     }
 
     public void updateUserProfile(UserPutDTO userPutDTO, long id) {
-        String message = "User with id %d was not found!";
+        String messageId = "User with id %d was not found!";
         User userToUpdate = userRepository.findById(id).
-                orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(message, id)));
+                orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(messageId, id)));
 
         if (userPutDTO.getUsername() != null) {
             userToUpdate.setUsername(userPutDTO.getUsername());
         }
+
         if (userPutDTO.getBirthday() != null) {
             userToUpdate.setBirthday(userPutDTO.getBirthday());
         }

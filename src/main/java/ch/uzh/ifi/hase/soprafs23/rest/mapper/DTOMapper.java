@@ -21,24 +21,33 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface DTOMapper {
 
-  DTOMapper INSTANCE = Mappers.getMapper(DTOMapper.class);
+    DTOMapper INSTANCE = Mappers.getMapper(DTOMapper.class);
 
-  @Mapping(source = "username", target = "username")
-  @Mapping(source = "password", target = "password")
-  User convertUserPostDTOtoEntity(UserPostDTO userPostDTO);
+    @Mapping(source = "username", target = "username")
+    @Mapping(source = "password", target = "password")
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "token", ignore = true)
+    @Mapping(target = "status", ignore = true)
+    @Mapping(target = "creation_date", ignore = true)
+    @Mapping(target = "birthday", ignore = true)
+    User convertUserPostDTOtoEntity(UserPostDTO userPostDTO);
 
-  @Mapping(source = "id", target = "id")
-  @Mapping(source = "password", target = "password")
-  @Mapping(source = "username", target = "username")
-  @Mapping(source = "status", target = "status")
-  @Mapping(source = "creation_date", target = "creation_date")
-  @Mapping(source = "birthday", target = "birthday", dateFormat = "dd.MM.yyy")
-  @Mapping(source = "token", target="token")
-  UserGetDTO convertEntityToUserGetDTO(User user);
+    @Mapping(source = "id", target = "id")
+    @Mapping(source = "password", target = "password")
+    @Mapping(source = "username", target = "username")
+    @Mapping(source = "status", target = "status")
+    @Mapping(source = "creation_date", target = "creation_date")
+    @Mapping(source = "birthday", target = "birthday", dateFormat = "dd.MM.yyy")
+    @Mapping(source = "token", target="token")
+    UserGetDTO convertEntityToUserGetDTO(User user);
 
     @Mapping(source = "username", target = "username")
     @Mapping(source = "birthday", target = "birthday")
     @Mapping(source = "id", target = "id")
+    @Mapping(source = "status", target = "status")
+    @Mapping(target = "token", ignore = true)
+    @Mapping(target = "password", ignore = true)
+    @Mapping(target = "creation_date", ignore = true)
     User convertUserPutDTOtoEntity(UserPutDTO userPutDTO);
 
 }
